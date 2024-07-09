@@ -43,3 +43,6 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: pranjal0819/kubectl:${{ steps.image-tag.outputs.IMAGE_TAG }}
+          build-args: |
+            USER=kubectl
+            PASSWORD=kubectl

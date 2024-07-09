@@ -6,7 +6,7 @@ echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[0
 # Append aliases to .bashrc
 echo '
 alias kubectl="kubectl --namespace=$NAMESPACE"
-alias khelp="cat < ~/kube_help"
+alias khelp="cat < ~/.kube_help"
 alias kall="kubectl get all -A"
 alias kpod="kubectl get pod"
 alias kjob="kubectl get job"
@@ -54,7 +54,7 @@ end
 echo '
 alias kubectl "kubectl --namespace=$NAMESPACE"
 alias helm "helm --namespace=$NAMESPACE"
-alias khelp "cat < ~/kube_help"
+alias khelp "cat < ~/.kube_help"
 alias kall "kubectl get all -A"
 alias kpod "kubectl get pod"
 alias kjob "kubectl get job"

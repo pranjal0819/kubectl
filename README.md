@@ -105,4 +105,4 @@ For us to provide better support, be sure to include the following information i
 
 ## License
 
-Copyright &copy; 2022-24 Pranjal Kushwaha
+Copyright &copy; 2024-25 Pranjal Kushwaha
