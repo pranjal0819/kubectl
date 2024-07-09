@@ -28,7 +28,7 @@ echo 'alias kubectl-prod='\'' function _kubectl_prod()  { docker run -it --rm --
 
 You can run these command into the container
 
-1. `kpop` to get list of pod, and
+1. `kpod` to get list of pod, and
 2. `klogs pod_name` to get log of pod
 3. `khelp` to get a list of shortcut commands
 

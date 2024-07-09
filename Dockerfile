@@ -6,7 +6,7 @@ ARG TARGETPLATFORM
 
 ENV HOME=/home/kubectl PATH=$PATH:/home/kubectl NAMESPACE=core SERVER=cat
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y curl unzip vim
+RUN apt-get update && apt-get upgrade -y && apt-get install -y curl unzip vim fish
 
 # Create group "kubectl" and user "kubectl".
 RUN groupadd --system kubectl
@@ -29,7 +29,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
 
 # Install dependencies.
 RUN echo "$(cat kubectl.sha256) kubectl" | sha256sum --check && unzip -q awscliv2.zip && \
-    ./aws/install && chmod +x ./kubectl && chmod +x /usr/local/bin/helm && \
+    aws/install && chmod +x kubectl && chmod +x /usr/local/bin/helm && \
     rm -rf aws awscliv2.zip kubectl.sha256 linux-amd64 linux-arm64
 
 # Switch to application user.
@@ -37,18 +37,8 @@ USER kubectl
 
 COPY --chown=kubectl:kubectl . $HOME
 
-RUN echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u\[\033[00m\]@\[\033[01;31m\]$SERVER\[\033[00m\]~\[\033[01;32m\]$NAMESPACE\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"' >> ~/.bashrc && \
-    echo 'alias kubectl="kubectl --namespace=$NAMESPACE"' >> ~/.bashrc && \
-    echo 'alias khelp="cat < ~/kube_help"' >> ~/.bashrc && \
-    echo 'alias kpop="kubectl get pod"' >> ~/.bashrc && \
-    echo 'alias kjob="kubectl get job"' >> ~/.bashrc && \
-    echo 'alias kall="kubectl get pod -A"' >> ~/.bashrc && \
-    echo 'alias klogs="kubectl logs -f"' >> ~/.bashrc && \
-    echo 'alias kexec="kubectl exec -it"' >> ~/.bashrc && \
-    echo 'alias kdelpod="kubectl delete pod"' >> ~/.bashrc && \
-    echo 'alias kdeljob="kubectl delete job"' >> ~/.bashrc && \
-    echo 'alias kcount="kubectl get pods -A --field-selector=status.phase=Running --no-headers | wc -l"' >> ~/.bashrc && \
-    echo 'alias kdelpods="delete_pods() { kubectl get pods --no-headers=true | awk '\''/'\''\$1'\''/{print \$1}'\'' | xargs kubectl delete --namespace=$NAMESPACE pod; }; delete_pods"' >> ~/.bashrc && \
-    echo 'alias kdeljobs="delete_jobs() { kubectl get jobs --no-headers=true | awk '\''/'\''\$1'\''/{print \$1}'\'' | xargs kubectl delete --namespace=$NAMESPACE job; }; delete_jobs"' >> ~/.bashrc
+RUN /bin/fish
 
-CMD /bin/bash
+RUN chmod +x script.sh && script.sh && rm -rf script.sh
+
+CMD /bin/fish
