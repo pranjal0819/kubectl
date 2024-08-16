@@ -1,0 +1,15 @@
+====================================================================================================
+alias               | command                      | Desc
+----------------------------------------------------------------------------------------------------
+kall                | kubectl get all -A           | Retrieve list of all pods.
+kpod                | kubectl get pod              | Retrieve list of pods.
+kjob                | kubectl get job              | Retrieve list of jobs.
+kcount              | kubectl get pod -A | wc -l   | Retrieve count of Running pods.
+klogs pod_name      | kubectl logs -f pod_name     | Stream pod's real-time logs.
+kexec pod_name args | kubectl exec -it pod_name sh | Open interactive shell in pod.
+kdelpod pod_name    | kubectl delete pod pod_name  | Delete pod.
+kdeljob pod_name    | kubectl delete job pod_name  | Delete job.
+kdelpods args       |                              | Delete multiple pod. eg: kdelpods "pod1|pod2"
+kdeljobs args       |                              | Delete multiple job. eg: kdeljobs "job1|job2"
+
+==================================================================================================== 

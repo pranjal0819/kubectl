@@ -1,0 +1,15 @@
+# Ignore git
+.git
+.github
+.gitignore
+
+# JetBrains IDE files
+.idea
+
+# Ignore docker
+Dockerfile
+.dockerignore
+
+.DS_Store
+LICENSE
+README.md
