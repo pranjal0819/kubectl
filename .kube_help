@@ -4,6 +4,7 @@ alias               | command                      | Desc
 kall                | kubectl get all -A           | Retrieve list of all pods.
 kpod                | kubectl get pod              | Retrieve list of pods.
 kjob                | kubectl get job              | Retrieve list of jobs.
+ktop                | kubectl top pod              | Retrieve resource usage statistics.
 kcount              | kubectl get pod -A | wc -l   | Retrieve count of Running pods.
 klogs pod_name      | kubectl logs -f pod_name     | Stream pod's real-time logs.
 kexec pod_name args | kubectl exec -it pod_name sh | Open interactive shell in pod.

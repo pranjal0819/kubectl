@@ -15,15 +15,17 @@
 ## Summary
 
 ```bash
-alias kubectl-gamma='function _kubectl_gamma() { docker run -it --rm --env NAMESPACE="${1:-core}" --env SERVER=gamma --env-file $HOME/.keys/aws_credential_gamma --volume $HOME/.keys/kube_config_gamma:/home/kubectl/.kube/config pranjal0819/kubectl; }; _kubectl_gamma'
-alias kubectl-prod=' function _kubectl_prod()  { docker run -it --rm --env NAMESPACE="${1:-core}" --env SERVER=prod  --env-file $HOME/.keys/aws_credential_prod  --volume $HOME/.keys/kube_config_prod:/home/kubectl/.kube/config  pranjal0819/kubectl; }; _kubectl_prod'
+alias kubectl-gamma='   function _kubectl_gamma()    { docker run -it --rm --env NAMESPACE=gamma    --env SERVER=gamma    --volume $HOME/.pass/aws_config_gamma:/home/temp/.aws/config    --volume $HOME/.pass/kube_config_gamma:/home/temp/.kube/config    pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && /bin/fish"; }; _kubectl_gamma'
+alias kubectl-pre-prod='function _kubectl_pre_prod() { docker run -it --rm --env NAMESPACE=pre-prod --env SERVER=pre-prod --volume $HOME/.pass/aws_config_pre_prod:/home/temp/.aws/config --volume $HOME/.pass/kube_config_pre_prod:/home/temp/.kube/config pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && /bin/fish"; }; _kubectl_pre_prod'
+alias kubectl-prod='    function _kubectl_prod()     { docker run -it --rm --env NAMESPACE=prod     --env SERVER=prod     --volume $HOME/.pass/aws_config_prod:/home/temp/.aws/config     --volume $HOME/.pass/kube_config_prod:/home/temp/.kube/config     pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && /bin/fish"; }; _kubectl_prod'
 ```
 
 ### You can add alias into `bashrc` or `zshrc` file, like this:
 
 ```bash
-echo 'alias kubectl-gamma='\''function _kubectl_gamma() { docker run -it --rm --env NAMESPACE="${1:-core}" --env SERVER=gamma --env-file $HOME/.keys/aws_credential_gamma --volume $HOME/.keys/kube_config_gamma:/home/kubectl/.kube/config pranjal0819/kubectl; }; _kubectl_gamma'\''' >> ~/.zshrc
-echo 'alias kubectl-prod='\'' function _kubectl_prod()  { docker run -it --rm --env NAMESPACE="${1:-core}" --env SERVER=prod  --env-file $HOME/.keys/aws_credential_prod  --volume $HOME/.keys/kube_config_prod:/home/kubectl/.kube/config  pranjal0819/kubectl; }; _kubectl_prod'\'''  >> ~/.zshrc
+echo 'alias kubectl-gamma='\''   function _kubectl_gamma()    { docker run -it --rm --env NAMESPACE=gamma    --env SERVER=gamma    --volume $HOME/.pass/aws_config_gamma:/home/temp/.aws/config    --volume $HOME/.pass/kube_config_gamma:/home/temp/.kube/config    pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && /bin/fish"; }; _kubectl_gamma'\' >> ~/.zshrc
+echo 'alias kubectl-pre-prod='\''function _kubectl_pre_prod() { docker run -it --rm --env NAMESPACE=pre-prod --env SERVER=pre-prod --volume $HOME/.pass/aws_config_pre_prod:/home/temp/.aws/config --volume $HOME/.pass/kube_config_pre_prod:/home/temp/.kube/config pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && /bin/fish"; }; _kubectl_pre-prod'\' >> ~/.zshrc
+echo 'alias kubectl-prod='\''    function _kubectl_prod()     { docker run -it --rm --env NAMESPACE=prod     --env SERVER=prod     --volume $HOME/.pass/aws_config_prod:/home/temp/.aws/config     --volume $HOME/.pass/kube_config_prod:/home/temp/.kube/config     pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && /bin/fish"; }; _kubectl_prod'\' >> ~/.zshrc
 ```
 
 You can run these command into the container
@@ -31,6 +33,20 @@ You can run these command into the container
 1. `kpod` to get list of pod, and
 2. `klogs pod_name` to get log of pod
 3. `khelp` to get a list of shortcut commands
+
+| alias               | command                      | Desc                                           |
+|---------------------|------------------------------|------------------------------------------------|
+| kall                | kubectl get all -A           | Retrieve list of all pods.                     |
+| kpod                | kubectl get pod              | Retrieve list of pods.                         |
+| kjob                | kubectl get job              | Retrieve list of jobs.                         |
+| ktop                | kubectl top pod              | Retrieve resource usage statistics.            |
+| kcount              | kubectl get pod -A \| wc -l  | Retrieve count of Running pods.                |
+| klogs pod_name      | kubectl logs -f pod_name     | Stream pod's real-time logs.                   |
+| kexec pod_name args | kubectl exec -it pod_name sh | Open interactive shell in pod.                 |
+| kdelpod pod_name    | kubectl delete pod pod_name  | Delete pod.                                    |
+| kdeljob pod_name    | kubectl delete job pod_name  | Delete job.                                    |
+| kdelpods args       |                              | Delete multiple pod. eg: kdelpods "pod1\|pod2" |
+| kdeljobs args       |                              | Delete multiple job. eg: kdeljobs "job1\|job2" |
 
 ---
 
@@ -54,7 +70,7 @@ docker pull pranjal0819/kubectl:[TAG]
 ### If you wish, you can also build the image yourself.
 
 ```bash
-docker build --no-cache --tag pranjal0819/kubectl .
+docker build --no-cache --build-arg USER=kubectl --build-arg PASS=kubectl --tag pranjal0819/kubectl .
 ```
 
 ### For multiplatform use buildx
@@ -64,7 +80,7 @@ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 docker buildx rm builder
 docker buildx create --name builder --driver docker-container --use
 docker buildx inspect --bootstrap
-docker buildx build --no-cache --platform linux/amd64,linux/arm64 --tag pranjal0819/kubectl . --load
+docker buildx build --no-cache --platform linux/amd64,linux/arm64 --build-arg USER=kubectl --build-arg PASS=kubectl --tag pranjal0819/kubectl . --load
 ```
 
 ---
@@ -77,13 +93,13 @@ To run commands inside this container you can use `docker run`, for example, to 
 the example below:
 
 ```bash
-docker run --rm --env NAMESPACE=core --env SERVER=gamma --env-file $HOME/.keys/aws_credential --volume $HOME/.keys/kube_config:/home/kubectl/.kube/config pranjal0819/kubectl kubectl
+docker run --rm --env NAMESPACE=gamma --env SERVER=gamma --volume $HOME/.pass/aws_credential:/home/temp/.aws/config --volume $HOME/.pass/kube_config:/home/temp/.kube/config pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && kubectl"
 ```
 
 To access inside the docker shell you can use `docker run -it`, you can follow the example below:
 
 ```bash
-docker run -it --rm --env NAMESPACE=core --env SERVER=gamma --env-file $HOME/.keys/aws_credential --volume $HOME/.keys/kube_config:/home/kubectl/.kube/config pranjal0819/kubectl
+docker run -it --rm --env NAMESPACE=gamma --env SERVER=gamma --volume $HOME/.pass/aws_credential:/home/temp/.aws/config --volume $HOME/.pass/kube_config:/home/temp/.kube/config pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && /bin/fish"
 ```
 
 Consult the [Kubectl Reference Documentation](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)

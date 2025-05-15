@@ -5,11 +5,13 @@ echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[0
 
 # Append aliases to .bashrc
 echo '
+alias auth="aws configure sso --use-device-code --no-browser"
 alias kubectl="kubectl --namespace=$NAMESPACE"
 alias khelp="cat < ~/.kube_help"
 alias kall="kubectl get all -A"
 alias kpod="kubectl get pod"
 alias kjob="kubectl get job"
+alias ktop="kubectl top pod"
 alias klogs="kubectl logs -f"
 alias kexec="kubectl exec -it"
 alias kdelpod="kubectl delete pod"
@@ -50,12 +52,14 @@ end
 
 # Append aliases to config.fish
 echo '
+alias auth "aws configure sso --use-device-code --no-browser"
 alias kubectl "kubectl --namespace=$NAMESPACE"
 alias helm "helm --namespace=$NAMESPACE"
 alias khelp "cat < ~/.kube_help"
 alias kall "kubectl get all -A"
 alias kpod "kubectl get pod"
 alias kjob "kubectl get job"
+alias ktop "kubectl top pod"
 alias klogs "kubectl logs -f"
 alias kexec "kubectl exec -it"
 alias kdelpod "kubectl delete pod"
