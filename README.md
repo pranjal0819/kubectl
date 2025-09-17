@@ -3,7 +3,7 @@
 ## What is Kubectl?
 
 > Kubectl is the Kubernetes command-line interface. It allows for managing the Kubernetes cluster by providing a wide
-> set of commands that allows communication with the Kubernetes API in a friendly way.
+> set of commands that allows communication with the Kubernetes API friendlily.
 
 ## What is helm?
 
@@ -37,14 +37,15 @@ You can run these command into the container
 | alias               | command                      | Desc                                           |
 |---------------------|------------------------------|------------------------------------------------|
 | kall                | kubectl get all -A           | Retrieve list of all pods.                     |
-| kpod                | kubectl get pod              | Retrieve list of pods.                         |
 | kjob                | kubectl get job              | Retrieve list of jobs.                         |
+| kpod                | kubectl get pod              | Retrieve list of pods.                         |
 | ktop                | kubectl top pod              | Retrieve resource usage statistics.            |
+| kdesc               | kubectl describe pod         | Debugging and Troubleshooting pods.            |
 | kcount              | kubectl get pod -A \| wc -l  | Retrieve count of Running pods.                |
-| klogs pod_name      | kubectl logs -f pod_name     | Stream pod's real-time logs.                   |
 | kexec pod_name args | kubectl exec -it pod_name sh | Open interactive shell in pod.                 |
-| kdelpod pod_name    | kubectl delete pod pod_name  | Delete pod.                                    |
+| klogs pod_name      | kubectl logs -f pod_name     | Stream pod's real-time logs.                   |
 | kdeljob pod_name    | kubectl delete job pod_name  | Delete job.                                    |
+| kdelpod pod_name    | kubectl delete pod pod_name  | Delete pod.                                    |
 | kdelpods args       |                              | Delete multiple pod. eg: kdelpods "pod1\|pod2" |
 | kdeljobs args       |                              | Delete multiple job. eg: kdeljobs "job1\|job2" |
 
