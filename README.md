@@ -5,7 +5,7 @@
 > Kubectl is the Kubernetes command-line interface. It allows for managing the Kubernetes cluster by providing a wide
 > set of commands that allows communication with the Kubernetes API friendlily.
 
-## What is helm?
+## What is a helm?
 
 > Helm is a package manager for Kubernetes that helps you define, install, and manage Kubernetes applications using
 > charts. It simplifies the deployment, upgrading, and configuration of applications on Kubernetes clusters.
@@ -28,9 +28,9 @@ echo 'alias kubectl-pre-prod='\''function _kubectl_pre_prod() { docker run -it -
 echo 'alias kubectl-prod='\''    function _kubectl_prod()     { docker run -it --rm --env NAMESPACE=prod     --env SERVER=prod     --volume $HOME/.pass/aws_config_prod:/home/temp/.aws/config     --volume $HOME/.pass/kube_config_prod:/home/temp/.kube/config     pranjal0819/kubectl sh -c "cp -r /home/temp/. /home/kubectl && /bin/fish"; }; _kubectl_prod'\' >> ~/.zshrc
 ```
 
-You can run these command into the container
+You can run these commands into the container
 
-1. `kpod` to get list of pod, and
+1. `kpod` to get a list of pod, and
 2. `klogs pod_name` to get log of pod
 3. `khelp` to get a list of shortcut commands
 
@@ -110,7 +110,7 @@ to find the completed list of commands available.
 
 ## Issues
 
-If you encountered a problem running this container, you can reach out
+If you encounter a problem running this container, you can reach out
 to [Pranjal Kushwaha](mailto:pranjal0819@gmail.com).
 For us to provide better support, be sure to include the following information in your issue:
 
@@ -122,4 +122,4 @@ For us to provide better support, be sure to include the following information i
 
 ## License
 
-Copyright &copy; 2024-25 Pranjal Kushwaha
+Copyright &copy; 2024-26 Pranjal Kushwaha

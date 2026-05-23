@@ -4,9 +4,9 @@ FROM ubuntu
 ARG USER="user"
 ARG PASS="ubuntu"
 # https://github.com/helm/helm/releases
-ARG HELM_VERSION="v3.19.0"
+ARG HELM_VERSION="v4.2.0"
 # https://dl.k8s.io/release/stable.txt
-ARG KUBECTL_VERSION="v1.34.1"
+ARG KUBECTL_VERSION="v1.36.1"
 ARG TARGETPLATFORM
 
 # Set environment variables
